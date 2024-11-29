@@ -95,3 +95,23 @@ h2 {
 strong {
     color: #1a73e8;
 }
+
+.recipe-actions {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.download-button {
+    background-color: #1a73e8;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.download-button:hover {
+    background-color: #1557b0;
+}
