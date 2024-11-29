@@ -18,11 +18,23 @@ const styles = StyleSheet.create({
         color: '#666',
         fontSize: 8,
     },
+    contentContainer: {
+        flexDirection: 'row',
+        gap: 10,
+        marginBottom: 10,
+    },
+    leftColumn: {
+        width: '40%',
+    },
+    rightColumn: {
+        width: '60%',
+    },
     image: {
         width: '100%',
-        height: 120,
+        height: 200,
         objectFit: 'cover',
         marginBottom: 10,
+        borderRadius: 5,
     },
     section: {
         marginBottom: 10,
@@ -36,24 +48,25 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         gap: 5,
-        marginBottom: 10,
     },
     ingredientCard: {
-        width: '23%',
+        width: '48%',
         padding: 5,
         backgroundColor: '#f8f9fa',
         borderRadius: 3,
+        marginBottom: 5,
+        flexDirection: 'row',
         alignItems: 'center',
+        gap: 5,
     },
     ingredientImage: {
-        width: 30,
-        height: 30,
-        borderRadius: 15,
-        marginBottom: 3,
+        width: 20,
+        height: 20,
+        borderRadius: 10,
     },
     ingredient: {
-        fontSize: 6,
-        marginBottom: 2,
+        fontSize: 8,
+        flex: 1,
     },
     instruction: {
         fontSize: 8,
@@ -146,27 +159,33 @@ function RecipePDF({ recipe }) {
                     <Text>⭐ {recipe.rating.average}/5</Text>
                 </View>
 
-                {imageData && (
-                    <Image
-                        style={styles.image}
-                        src={imageData}
-                    />
-                )}
+                <View style={styles.contentContainer}>
+                    <View style={styles.leftColumn}>
+                        {imageData && (
+                            <Image
+                                style={styles.image}
+                                src={imageData}
+                            />
+                        )}
+                    </View>
 
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Ingredients</Text>
-                    <View style={styles.ingredientsGrid}>
-                        {recipe.ingredients.map((ingredient) => (
-                            <View key={ingredient.uid} style={styles.ingredientCard}>
-                                {ingredientImages[ingredient.uid] && (
-                                    <Image
-                                        style={styles.ingredientImage}
-                                        src={ingredientImages[ingredient.uid]}
-                                    />
-                                )}
-                                <Text style={styles.ingredient}>{ingredient.label}</Text>
+                    <View style={styles.rightColumn}>
+                        <View style={styles.section}>
+                            <Text style={styles.sectionTitle}>Ingredients</Text>
+                            <View style={styles.ingredientsGrid}>
+                                {recipe.ingredients.map((ingredient) => (
+                                    <View key={ingredient.uid} style={styles.ingredientCard}>
+                                        {ingredientImages[ingredient.uid] && (
+                                            <Image
+                                                style={styles.ingredientImage}
+                                                src={ingredientImages[ingredient.uid]}
+                                            />
+                                        )}
+                                        <Text style={styles.ingredient}>{ingredient.label}</Text>
+                                    </View>
+                                ))}
                             </View>
-                        ))}
+                        </View>
                     </View>
                 </View>
 
