@@ -1,6 +1,14 @@
 import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import { useState, useEffect } from 'react';
 
+const parseInstructions = (htmlString) => {
+    // Split by paragraph tags and clean up
+    return htmlString
+        .split('</p>')
+        .map(p => p.replace(/<p>/g, '').replace(/<\/?strong>/g, '').trim())
+        .filter(p => p.length > 0);
+};
+
 const styles = StyleSheet.create({
     page: {
         padding: 20,
@@ -70,21 +78,35 @@ const styles = StyleSheet.create({
     },
     instruction: {
         fontSize: 8,
-        marginBottom: 5,
+        marginBottom: 10,
         flexDirection: 'row',
-        gap: 5,
+        gap: 10,
+        alignItems: 'flex-start',
     },
     stepNumber: {
         color: '#d32f2f',
         fontWeight: 'bold',
+        width: 15,
+    },
+    instructionContent: {
+        flex: 1,
+        flexDirection: 'row',
+        gap: 10,
+        alignItems: 'flex-start',
+    },
+    instructionTextContainer: {
+        flex: 1,
+    },
+    instructionText: {
+        fontSize: 10,
+        marginBottom: 3,
     },
     instructionImage: {
-        width: '30%',
-        height: 60,
+        width: 100,
+        height: 80,
         objectFit: 'cover',
-        marginLeft: 5,
         borderRadius: 3,
-    }
+    },
 });
 
 function RecipePDF({ recipe }) {
@@ -194,8 +216,14 @@ function RecipePDF({ recipe }) {
                     {recipe.cooking_instructions.map((step) => (
                         <View key={step.order} style={styles.instruction}>
                             <Text style={styles.stepNumber}>{step.order}.</Text>
-                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={{ flex: 1 }}>{step.instruction.replace(/<[^>]*>/g, '')}</Text>
+                            <View style={styles.instructionContent}>
+                                <View style={styles.instructionTextContainer}>
+                                    {parseInstructions(step.instruction).map((line, index) => (
+                                        <Text key={index} style={styles.instructionText}>
+                                            {line}
+                                        </Text>
+                                    ))}
+                                </View>
                                 {instructionImages[step.order] && (
                                     <Image
                                         style={styles.instructionImage}
