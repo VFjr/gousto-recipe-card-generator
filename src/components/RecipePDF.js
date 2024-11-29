@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         marginBottom: 5,
-        color: '#1a73e8',
+        color: '#d32f2f',
     },
     meta: {
         flexDirection: 'row',
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: 12,
         marginBottom: 5,
-        color: '#1a73e8',
+        color: '#d32f2f',
     },
     ingredientsGrid: {
         flexDirection: 'row',
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         gap: 5,
     },
     stepNumber: {
-        color: '#1a73e8',
+        color: '#d32f2f',
         fontWeight: 'bold',
     },
     instructionImage: {
