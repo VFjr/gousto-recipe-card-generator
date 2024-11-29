@@ -106,6 +106,11 @@ const styles = StyleSheet.create({
         objectFit: 'cover',
         borderRadius: 3,
     },
+    instructionImageContainer: {
+        width: 100,
+        minWidth: 100,
+        height: 80,
+    },
 });
 
 function RecipePDF({ recipe }) {
@@ -214,13 +219,16 @@ function RecipePDF({ recipe }) {
                     <Text style={styles.sectionTitle}>Instructions</Text>
                     {recipe.cooking_instructions.map((step) => (
                         <View key={step.order} style={styles.instruction}>
+                            <Text style={styles.stepNumber}>{step.order}.</Text>
                             <View style={styles.instructionContent}>
-                                {instructionImages[step.order] && (
-                                    <Image
-                                        style={styles.instructionImage}
-                                        src={instructionImages[step.order]}
-                                    />
-                                )}
+                                <View style={styles.instructionImageContainer}>
+                                    {instructionImages[step.order] && (
+                                        <Image
+                                            style={styles.instructionImage}
+                                            src={instructionImages[step.order]}
+                                        />
+                                    )}
+                                </View>
                                 <View style={styles.instructionTextContainer}>
                                     {parseInstructions(step.instruction).map((line, index) => (
                                         <Text key={index} style={styles.instructionText}>
