@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/repository-name/static/css/main.2beb190c.css",
-    "main.js": "/repository-name/static/js/main.788b20a0.js",
-    "static/js/453.d1356742.chunk.js": "/repository-name/static/js/453.d1356742.chunk.js",
-    "index.html": "/repository-name/index.html",
-    "main.2beb190c.css.map": "/repository-name/static/css/main.2beb190c.css.map",
-    "main.788b20a0.js.map": "/repository-name/static/js/main.788b20a0.js.map",
-    "453.d1356742.chunk.js.map": "/repository-name/static/js/453.d1356742.chunk.js.map"
+    "main.css": "/gousto-recipe-card-generator/static/css/main.81ba321b.css",
+    "main.js": "/gousto-recipe-card-generator/static/js/main.1c47e83e.js",
+    "static/js/453.d1356742.chunk.js": "/gousto-recipe-card-generator/static/js/453.d1356742.chunk.js",
+    "index.html": "/gousto-recipe-card-generator/index.html",
+    "main.81ba321b.css.map": "/gousto-recipe-card-generator/static/css/main.81ba321b.css.map",
+    "main.1c47e83e.js.map": "/gousto-recipe-card-generator/static/js/main.1c47e83e.js.map",
+    "453.d1356742.chunk.js.map": "/gousto-recipe-card-generator/static/js/453.d1356742.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2beb190c.css",
-    "static/js/main.788b20a0.js"
+    "static/css/main.81ba321b.css",
+    "static/js/main.1c47e83e.js"
   ]
 }
