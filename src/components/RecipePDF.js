@@ -87,20 +87,25 @@ const styles = StyleSheet.create({
     },
     instructionTextContainer: {
         flex: 1,
+        paddingLeft: 90,
+    },
+    instructionTextContainerWithImage: {
+        flex: 1,
+        paddingLeft: 0,
     },
     instructionText: {
         marginBottom: 3,
     },
     instructionImage: {
-        width: 100,
-        height: 80,
+        width: 80,
+        height: 64,
         objectFit: 'cover',
         borderRadius: 3,
     },
     instructionImageContainer: {
-        width: 100,
-        minWidth: 100,
-        height: 80,
+        width: 80,
+        minWidth: 80,
+        height: 64,
     },
 });
 
@@ -211,21 +216,31 @@ function RecipePDF({ recipe }) {
                     {recipe.cooking_instructions.map((step) => (
                         <View key={step.order} style={styles.instruction}>
                             <View style={styles.instructionContent}>
-                                {instructionImages[step.order] && (
-                                    <View style={styles.instructionImageContainer}>
-                                        <Image
-                                            style={styles.instructionImage}
-                                            src={instructionImages[step.order]}
-                                        />
+                                {instructionImages[step.order] ? (
+                                    <>
+                                        <View style={styles.instructionImageContainer}>
+                                            <Image
+                                                style={styles.instructionImage}
+                                                src={instructionImages[step.order]}
+                                            />
+                                        </View>
+                                        <View style={styles.instructionTextContainerWithImage}>
+                                            {parseInstructions(step.instruction).map((line, index) => (
+                                                <Text key={index} style={styles.instructionText}>
+                                                    {line}
+                                                </Text>
+                                            ))}
+                                        </View>
+                                    </>
+                                ) : (
+                                    <View style={styles.instructionTextContainer}>
+                                        {parseInstructions(step.instruction).map((line, index) => (
+                                            <Text key={index} style={styles.instructionText}>
+                                                {line}
+                                            </Text>
+                                        ))}
                                     </View>
                                 )}
-                                <View style={styles.instructionTextContainer}>
-                                    {parseInstructions(step.instruction).map((line, index) => (
-                                        <Text key={index} style={styles.instructionText}>
-                                            {line}
-                                        </Text>
-                                    ))}
-                                </View>
                             </View>
                         </View>
                     ))}
