@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     instructionText: {
-        fontSize: 10,
         marginBottom: 3,
     },
     instructionImage: {
@@ -215,8 +214,13 @@ function RecipePDF({ recipe }) {
                     <Text style={styles.sectionTitle}>Instructions</Text>
                     {recipe.cooking_instructions.map((step) => (
                         <View key={step.order} style={styles.instruction}>
-                            <Text style={styles.stepNumber}>{step.order}.</Text>
                             <View style={styles.instructionContent}>
+                                {instructionImages[step.order] && (
+                                    <Image
+                                        style={styles.instructionImage}
+                                        src={instructionImages[step.order]}
+                                    />
+                                )}
                                 <View style={styles.instructionTextContainer}>
                                     {parseInstructions(step.instruction).map((line, index) => (
                                         <Text key={index} style={styles.instructionText}>
@@ -224,12 +228,6 @@ function RecipePDF({ recipe }) {
                                         </Text>
                                     ))}
                                 </View>
-                                {instructionImages[step.order] && (
-                                    <Image
-                                        style={styles.instructionImage}
-                                        src={instructionImages[step.order]}
-                                    />
-                                )}
                             </View>
                         </View>
                     ))}
