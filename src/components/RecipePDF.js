@@ -79,17 +79,8 @@ const styles = StyleSheet.create({
     instruction: {
         fontSize: 8,
         marginBottom: 10,
-        flexDirection: 'row',
-        gap: 10,
-        alignItems: 'flex-start',
-    },
-    stepNumber: {
-        color: '#d32f2f',
-        fontWeight: 'bold',
-        width: 15,
     },
     instructionContent: {
-        flex: 1,
         flexDirection: 'row',
         gap: 10,
         alignItems: 'flex-start',
@@ -219,16 +210,15 @@ function RecipePDF({ recipe }) {
                     <Text style={styles.sectionTitle}>Instructions</Text>
                     {recipe.cooking_instructions.map((step) => (
                         <View key={step.order} style={styles.instruction}>
-                            <Text style={styles.stepNumber}>{step.order}.</Text>
                             <View style={styles.instructionContent}>
-                                <View style={styles.instructionImageContainer}>
-                                    {instructionImages[step.order] && (
+                                {instructionImages[step.order] && (
+                                    <View style={styles.instructionImageContainer}>
                                         <Image
                                             style={styles.instructionImage}
                                             src={instructionImages[step.order]}
                                         />
-                                    )}
-                                </View>
+                                    </View>
+                                )}
                                 <View style={styles.instructionTextContainer}>
                                     {parseInstructions(step.instruction).map((line, index) => (
                                         <Text key={index} style={styles.instructionText}>
