@@ -32,14 +32,14 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     leftColumn: {
-        width: '40%',
+        width: '35%',
     },
     rightColumn: {
-        width: '60%',
+        width: '55%',
     },
     image: {
         width: '100%',
-        height: 200,
+        height: 180,
         objectFit: 'cover',
         marginBottom: 10,
         borderRadius: 5,
