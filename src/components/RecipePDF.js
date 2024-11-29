@@ -3,77 +3,74 @@ import { useState, useEffect } from 'react';
 
 const styles = StyleSheet.create({
     page: {
-        padding: 30,
+        padding: 20,
         fontFamily: 'Helvetica',
     },
     title: {
-        fontSize: 24,
-        marginBottom: 10,
+        fontSize: 18,
+        marginBottom: 5,
         color: '#1a73e8',
     },
     meta: {
         flexDirection: 'row',
-        gap: 20,
-        marginBottom: 15,
+        gap: 10,
+        marginBottom: 10,
         color: '#666',
-        fontSize: 12,
+        fontSize: 8,
     },
     image: {
         width: '100%',
-        height: 200,
+        height: 120,
         objectFit: 'cover',
-        marginBottom: 20,
+        marginBottom: 10,
     },
     section: {
-        marginBottom: 20,
+        marginBottom: 10,
     },
     sectionTitle: {
-        fontSize: 16,
-        marginBottom: 10,
-        color: '#1a73e8',
-    },
-    ingredientsList: {
-        marginBottom: 15,
-    },
-    ingredient: {
         fontSize: 12,
         marginBottom: 5,
+        color: '#1a73e8',
+    },
+    ingredientsGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 5,
+        marginBottom: 10,
+    },
+    ingredientCard: {
+        width: '23%',
+        padding: 5,
+        backgroundColor: '#f8f9fa',
+        borderRadius: 3,
+        alignItems: 'center',
+    },
+    ingredientImage: {
+        width: 30,
+        height: 30,
+        borderRadius: 15,
+        marginBottom: 3,
+    },
+    ingredient: {
+        fontSize: 6,
+        marginBottom: 2,
     },
     instruction: {
-        fontSize: 12,
-        marginBottom: 10,
+        fontSize: 8,
+        marginBottom: 5,
         flexDirection: 'row',
-        gap: 10,
+        gap: 5,
     },
     stepNumber: {
         color: '#1a73e8',
         fontWeight: 'bold',
     },
-    ingredientsGrid: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        gap: 10,
-        marginBottom: 20,
-    },
-    ingredientCard: {
-        width: '30%',
-        padding: 10,
-        backgroundColor: '#f8f9fa',
-        borderRadius: 5,
-        alignItems: 'center',
-    },
-    ingredientImage: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        marginBottom: 5,
-    },
     instructionImage: {
-        width: '100%',
-        height: 200,
+        width: '30%',
+        height: 60,
         objectFit: 'cover',
-        marginTop: 10,
-        borderRadius: 5,
+        marginLeft: 5,
+        borderRadius: 3,
     }
 });
 
@@ -178,8 +175,8 @@ function RecipePDF({ recipe }) {
                     {recipe.cooking_instructions.map((step) => (
                         <View key={step.order} style={styles.instruction}>
                             <Text style={styles.stepNumber}>{step.order}.</Text>
-                            <View style={{ flex: 1 }}>
-                                <Text>{step.instruction.replace(/<[^>]*>/g, '')}</Text>
+                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                                <Text style={{ flex: 1 }}>{step.instruction.replace(/<[^>]*>/g, '')}</Text>
                                 {instructionImages[step.order] && (
                                     <Image
                                         style={styles.instructionImage}
