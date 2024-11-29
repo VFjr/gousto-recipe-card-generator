@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/gousto-recipe-card-generator/static/css/main.81ba321b.css",
-    "main.js": "/gousto-recipe-card-generator/static/js/main.1c47e83e.js",
+    "main.js": "/gousto-recipe-card-generator/static/js/main.cace169d.js",
     "static/js/453.d1356742.chunk.js": "/gousto-recipe-card-generator/static/js/453.d1356742.chunk.js",
     "index.html": "/gousto-recipe-card-generator/index.html",
     "main.81ba321b.css.map": "/gousto-recipe-card-generator/static/css/main.81ba321b.css.map",
-    "main.1c47e83e.js.map": "/gousto-recipe-card-generator/static/js/main.1c47e83e.js.map",
+    "main.cace169d.js.map": "/gousto-recipe-card-generator/static/js/main.cace169d.js.map",
     "453.d1356742.chunk.js.map": "/gousto-recipe-card-generator/static/js/453.d1356742.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.81ba321b.css",
-    "static/js/main.1c47e83e.js"
+    "static/js/main.cace169d.js"
   ]
 }
