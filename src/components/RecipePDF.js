@@ -49,30 +49,95 @@ const styles = StyleSheet.create({
         color: '#1a73e8',
         fontWeight: 'bold',
     },
+    ingredientsGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 10,
+        marginBottom: 20,
+    },
+    ingredientCard: {
+        width: '30%',
+        padding: 10,
+        backgroundColor: '#f8f9fa',
+        borderRadius: 5,
+        alignItems: 'center',
+    },
+    ingredientImage: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        marginBottom: 5,
+    },
+    instructionImage: {
+        width: '100%',
+        height: 200,
+        objectFit: 'cover',
+        marginTop: 10,
+        borderRadius: 5,
+    }
 });
 
 function RecipePDF({ recipe }) {
     const [imageData, setImageData] = useState(null);
+    const [ingredientImages, setIngredientImages] = useState({});
+    const [instructionImages, setInstructionImages] = useState({});
 
     useEffect(() => {
-        const fetchImage = async () => {
+        const fetchImages = async () => {
             try {
+                // Fetch main recipe image
                 const corsProxy = 'https://corsproxy.io/?';
                 const imageUrl = recipe.media.images[2].image;
                 const response = await fetch(corsProxy + encodeURIComponent(imageUrl));
                 const blob = await response.blob();
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    setImageData(reader.result);
-                };
-                reader.readAsDataURL(blob);
+                const mainImageData = await blobToBase64(blob);
+                setImageData(mainImageData);
+
+                // Fetch ingredient images
+                const ingredientPromises = recipe.ingredients.map(async (ingredient) => {
+                    if (ingredient.media?.images?.[0]?.image) {
+                        const response = await fetch(corsProxy + encodeURIComponent(ingredient.media.images[0].image));
+                        const blob = await response.blob();
+                        const base64 = await blobToBase64(blob);
+                        return [ingredient.uid, base64];
+                    }
+                    return null;
+                });
+
+                // Fetch instruction images
+                const instructionPromises = recipe.cooking_instructions.map(async (instruction) => {
+                    if (instruction.media?.images?.[0]?.image) {
+                        const response = await fetch(corsProxy + encodeURIComponent(instruction.media.images[0].image));
+                        const blob = await response.blob();
+                        const base64 = await blobToBase64(blob);
+                        return [instruction.order, base64];
+                    }
+                    return null;
+                });
+
+                const ingredientResults = await Promise.all(ingredientPromises);
+                const instructionResults = await Promise.all(instructionPromises);
+
+                const ingredientImagesMap = Object.fromEntries(ingredientResults.filter(Boolean));
+                const instructionImagesMap = Object.fromEntries(instructionResults.filter(Boolean));
+
+                setIngredientImages(ingredientImagesMap);
+                setInstructionImages(instructionImagesMap);
             } catch (error) {
-                console.error('Error loading image:', error);
+                console.error('Error loading images:', error);
             }
         };
 
-        fetchImage();
+        fetchImages();
     }, [recipe]);
+
+    const blobToBase64 = (blob) => {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(blob);
+        });
+    };
 
     return (
         <Document>
@@ -93,11 +158,17 @@ function RecipePDF({ recipe }) {
 
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Ingredients</Text>
-                    <View style={styles.ingredientsList}>
+                    <View style={styles.ingredientsGrid}>
                         {recipe.ingredients.map((ingredient) => (
-                            <Text key={ingredient.uid} style={styles.ingredient}>
-                                • {ingredient.label}
-                            </Text>
+                            <View key={ingredient.uid} style={styles.ingredientCard}>
+                                {ingredientImages[ingredient.uid] && (
+                                    <Image
+                                        style={styles.ingredientImage}
+                                        src={ingredientImages[ingredient.uid]}
+                                    />
+                                )}
+                                <Text style={styles.ingredient}>{ingredient.label}</Text>
+                            </View>
                         ))}
                     </View>
                 </View>
@@ -107,7 +178,15 @@ function RecipePDF({ recipe }) {
                     {recipe.cooking_instructions.map((step) => (
                         <View key={step.order} style={styles.instruction}>
                             <Text style={styles.stepNumber}>{step.order}.</Text>
-                            <Text>{step.instruction.replace(/<[^>]*>/g, '')}</Text>
+                            <View style={{ flex: 1 }}>
+                                <Text>{step.instruction.replace(/<[^>]*>/g, '')}</Text>
+                                {instructionImages[step.order] && (
+                                    <Image
+                                        style={styles.instructionImage}
+                                        src={instructionImages[step.order]}
+                                    />
+                                )}
+                            </View>
                         </View>
                     ))}
                 </View>
