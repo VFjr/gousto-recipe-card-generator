@@ -37,6 +37,11 @@ function App() {
   return (
     <div className="App">
       <div className="container">
+        <div className="header">
+          <h1>Gousto Recipe Card Generator</h1>
+          <p>Enter a Gousto recipe URL to generate a PDF recipe card.</p>
+        </div>
+
         <form onSubmit={handleSubmit} className="url-form">
           <input
             type="text"
