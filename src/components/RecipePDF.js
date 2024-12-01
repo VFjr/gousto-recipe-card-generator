@@ -1,5 +1,4 @@
 import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-import { useState, useEffect } from 'react';
 
 const parseInstructions = (htmlString) => {
     // Split by paragraph tags and clean up
@@ -118,82 +117,15 @@ const styles = StyleSheet.create({
     },
 });
 
-function RecipePDF({ recipe }) {
-    const [images, setImages] = useState({
-        main: null,
-        ingredients: {},
-        instructions: {}
-    });
-
-    useEffect(() => {
-        const fetchImages = async () => {
-            try {
-                const corsProxy = 'https://corsproxy.io/?';
-
-                // Fetch main recipe image
-                const imageUrl = recipe.media.images[2].image;
-                const response = await fetch(corsProxy + encodeURIComponent(imageUrl));
-                const blob = await response.blob();
-                const mainImageData = await blobToBase64(blob);
-
-                // Fetch ingredient images
-                const ingredientPromises = recipe.ingredients.map(async (ingredient) => {
-                    if (ingredient.media?.images?.[0]?.image) {
-                        const response = await fetch(corsProxy + encodeURIComponent(ingredient.media.images[0].image));
-                        const blob = await response.blob();
-                        const base64 = await blobToBase64(blob);
-                        return [ingredient.uid, base64];
-                    }
-                    return null;
-                });
-
-                // Fetch instruction images
-                const instructionPromises = recipe.cooking_instructions.map(async (instruction) => {
-                    if (instruction.media?.images?.[0]?.image) {
-                        const response = await fetch(corsProxy + encodeURIComponent(instruction.media.images[0].image));
-                        const blob = await response.blob();
-                        const base64 = await blobToBase64(blob);
-                        return [instruction.order, base64];
-                    }
-                    return null;
-                });
-
-                const ingredientResults = await Promise.all(ingredientPromises);
-                const instructionResults = await Promise.all(instructionPromises);
-
-                const ingredientImagesMap = Object.fromEntries(ingredientResults.filter(Boolean));
-                const instructionImagesMap = Object.fromEntries(instructionResults.filter(Boolean));
-
-                // Update all images at once
-                setImages({
-                    main: mainImageData,
-                    ingredients: ingredientImagesMap,
-                    instructions: instructionImagesMap
-                });
-            } catch (error) {
-                console.error('Error loading images:', error);
-            }
-        };
-
-        fetchImages();
-    }, [recipe]);
-
-    const blobToBase64 = (blob) => {
-        return new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.readAsDataURL(blob);
-        });
-    };
-
+function RecipePDF({ recipe, images }) {
     return (
         <Document>
             <Page size="A4" style={styles.page}>
                 <Text style={styles.title}>{recipe.title}</Text>
 
                 <View style={styles.meta}>
-                    <Text>⏱️ {recipe.prep_times.for_2} mins</Text>
-                    <Text>⭐ {recipe.rating.average}/5</Text>
+                    <Text>Time: {recipe.prep_times.for_2} mins</Text>
+                    <Text>Rating: {recipe.rating.average}/5</Text>
                 </View>
 
                 <View style={styles.contentContainer}>
@@ -265,4 +197,4 @@ function RecipePDF({ recipe }) {
     );
 }
 
-export default RecipePDF; 
+export default RecipePDF;
