@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         gap: 10,
         marginBottom: 10,
         color: '#666',
-        fontSize: 8,
+        fontSize: 9,
     },
 
     // Images
@@ -117,15 +117,19 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     instructionImage: {
-        width: 80,
-        height: 64,
+        position: 'absolute',
+        left: -5,
+        width: 60,
+        height: 100,
         objectFit: 'cover',
         borderRadius: 3,
     },
     instructionImageContainer: {
-        width: 80,
-        minWidth: 80,
-        height: 64,
+        width: 50,
+        minWidth: 50,
+        height: 100,
+        overflow: 'hidden',
+        position: 'relative',
     },
 
     // Ingredients
@@ -145,14 +149,13 @@ const styles = StyleSheet.create({
         gap: 3,
     },
     ingredient: {
-        fontSize: 8,
+        fontSize: 9,
         flex: 1,
     },
 
     // Instructions
     instruction: {
         flex: 1,
-        fontSize: 8,
         marginBottom: 5,
     },
     instructionContent: {
@@ -173,9 +176,8 @@ const styles = StyleSheet.create({
 });
 
 const instructionHtmlStylesheet = {
-    // clear margins for all <p> tags
     p: {
-        margin: 0,
+        margin: 2,
     },
     '.text-purple': {
         color: 'purple',
@@ -218,7 +220,7 @@ function RecipePDF({ recipe, images }) {
                         <View style={styles.ingredientsGrid}>
                             {recipe.ingredients
                                 .filter(ingredient => {
-                                    return !ingredient.label.trim().endsWith('x0');
+                                    return !ingredient.label.trim().endsWith('x0') && !ingredient.label.trim().startsWith('0 ');
                                 })
                                 .map((ingredient) => (
                                     <View key={ingredient.uid} style={styles.ingredientCard}>
@@ -257,7 +259,7 @@ function RecipePDF({ recipe, images }) {
                                             <View style={styles.instructionTextContainer}>
                                                 <Html
                                                     stylesheet={instructionHtmlStylesheet}
-                                                    style={{ fontSize: 8 }}
+                                                    style={{ fontSize: 9 }}
                                                 >
                                                     {adjustSpaceInHtmlTags(step.instruction)}
                                                 </Html>
@@ -287,7 +289,7 @@ function RecipePDF({ recipe, images }) {
                                             <View style={styles.instructionTextContainer}>
                                                 <Html
                                                     stylesheet={instructionHtmlStylesheet}
-                                                    style={{ fontSize: 8 }}
+                                                    style={{ fontSize: 9 }}
                                                 >
                                                     {adjustSpaceInHtmlTags(step.instruction)}
                                                 </Html>
