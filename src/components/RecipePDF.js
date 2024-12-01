@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
 
 function RecipePDF({ recipe }) {
     const [imageData, setImageData] = useState(null);
+    const [ingredientImages, setIngredientImages] = useState({});
     const [instructionImages, setInstructionImages] = useState({});
 
     useEffect(() => {
@@ -124,6 +125,17 @@ function RecipePDF({ recipe }) {
                 const mainImageData = await blobToBase64(blob);
                 setImageData(mainImageData);
 
+                // Fetch ingredient images
+                const ingredientPromises = recipe.ingredients.map(async (ingredient) => {
+                    if (ingredient.media?.images?.[0]?.image) {
+                        const response = await fetch(corsProxy + encodeURIComponent(ingredient.media.images[0].image));
+                        const blob = await response.blob();
+                        const base64 = await blobToBase64(blob);
+                        return [ingredient.uid, base64];
+                    }
+                    return null;
+                });
+
                 // Fetch instruction images
                 const instructionPromises = recipe.cooking_instructions.map(async (instruction) => {
                     if (instruction.media?.images?.[0]?.image) {
@@ -135,8 +147,13 @@ function RecipePDF({ recipe }) {
                     return null;
                 });
 
+                const ingredientResults = await Promise.all(ingredientPromises);
                 const instructionResults = await Promise.all(instructionPromises);
+
+                const ingredientImagesMap = Object.fromEntries(ingredientResults.filter(Boolean));
                 const instructionImagesMap = Object.fromEntries(instructionResults.filter(Boolean));
+
+                setIngredientImages(ingredientImagesMap);
                 setInstructionImages(instructionImagesMap);
             } catch (error) {
                 console.error('Error loading images:', error);
@@ -160,8 +177,8 @@ function RecipePDF({ recipe }) {
                 <Text style={styles.title}>{recipe.title}</Text>
 
                 <View style={styles.meta}>
-                    <Text>Time: {recipe.prep_times.for_2} mins</Text>
-                    <Text>Rating: {recipe.rating.average}/5</Text>
+                    <Text>⏱️ {recipe.prep_times.for_2} mins</Text>
+                    <Text>⭐ {recipe.rating.average}/5</Text>
                 </View>
 
                 <View style={styles.contentContainer}>
@@ -180,6 +197,12 @@ function RecipePDF({ recipe }) {
                             <View style={styles.ingredientsGrid}>
                                 {recipe.ingredients.map((ingredient) => (
                                     <View key={ingredient.uid} style={styles.ingredientCard}>
+                                        {ingredientImages[ingredient.uid] && (
+                                            <Image
+                                                style={styles.ingredientImage}
+                                                src={ingredientImages[ingredient.uid]}
+                                            />
+                                        )}
                                         <Text style={styles.ingredient}>{ingredient.label}</Text>
                                     </View>
                                 ))}

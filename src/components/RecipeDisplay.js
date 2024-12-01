@@ -5,6 +5,7 @@ import './RecipeDisplay.css';
 function RecipeDisplay({ recipe }) {
     return (
         <div className="recipe">
+            {/* Existing recipe display code */}
             <div className="recipe-actions">
                 <PDFDownloadLink
                     document={<RecipePDF recipe={recipe} />}
