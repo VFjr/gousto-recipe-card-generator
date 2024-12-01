@@ -166,6 +166,19 @@ const styles = StyleSheet.create({
     },
 });
 
+const instructionHtmlStylesheet = {
+    // clear margins for all <p> tags
+    p: {
+        margin: 0,
+    },
+    ['.text-purple']: {
+        color: 'purple',
+    },
+    ['.text-danger']: {
+        color: 'red',
+    },
+};
+
 function RecipePDF({ recipe, images }) {
     return (
         <Document>
@@ -223,7 +236,7 @@ function RecipePDF({ recipe, images }) {
                                     </View>
                                     <View style={styles.instructionTextContainer}>
                                         {console.log(step.instruction)}
-                                        <Html style={{ fontSize: 8 }}>{step.instruction}</Html>
+                                        <Html stylesheet={instructionHtmlStylesheet} style={{ fontSize: 8 }}>{step.instruction}</Html>
                                     </View>
                                 </View>
                             </View>
