@@ -145,17 +145,21 @@ function RecipePDF({ recipe, images }) {
                         <View style={styles.section}>
                             <Text style={styles.sectionTitle}>Ingredients</Text>
                             <View style={styles.ingredientsGrid}>
-                                {recipe.ingredients.map((ingredient) => (
-                                    <View key={ingredient.uid} style={styles.ingredientCard}>
-                                        {images.ingredients[ingredient.uid] && (
-                                            <Image
-                                                style={styles.ingredientImage}
-                                                src={images.ingredients[ingredient.uid]}
-                                            />
-                                        )}
-                                        <Text style={styles.ingredient}>{ingredient.label}</Text>
-                                    </View>
-                                ))}
+                                {recipe.ingredients
+                                    .filter(ingredient => {
+                                        return !ingredient.label.trim().endsWith('x0');
+                                    })
+                                    .map((ingredient) => (
+                                        <View key={ingredient.uid} style={styles.ingredientCard}>
+                                            {images.ingredients[ingredient.uid] && (
+                                                <Image
+                                                    style={styles.ingredientImage}
+                                                    src={images.ingredients[ingredient.uid]}
+                                                />
+                                            )}
+                                            <Text style={styles.ingredient}>{ingredient.label}</Text>
+                                        </View>
+                                    ))}
                             </View>
                         </View>
                     </View>
