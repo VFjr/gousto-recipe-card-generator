@@ -195,7 +195,6 @@ function adjustSpaceInHtmlTags(html) {
 }
 
 function RecipePDF({ recipe, images }) {
-    // Split instructions into two arrays
     const midPoint = Math.ceil(recipe.cooking_instructions.length / 2);
     const leftColumnInstructions = recipe.cooking_instructions.slice(0, midPoint);
     const rightColumnInstructions = recipe.cooking_instructions.slice(midPoint);

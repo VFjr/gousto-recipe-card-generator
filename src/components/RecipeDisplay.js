@@ -75,16 +75,20 @@ function RecipeDisplay({ recipe }) {
 
     return (
         <div className="recipe">
-            {/* Existing recipe display code */}
             <div className="recipe-actions">
                 <PDFDownloadLink
                     document={<RecipePDF recipe={recipe} images={images} />}
                     fileName={`${recipe.title}.pdf`}
                     className="download-button"
                 >
-                    {({ loading }) =>
-                        !loading && images.main ? 'Download PDF' : "Loading images..."
-                    }
+                    {({ loading }) => (
+                        <button
+                            className="download-button"
+                            disabled={loading || !images.main}
+                        >
+                            {!loading && images.main ? 'Download PDF' : "Loading images..."}
+                        </button>
+                    )}
                 </PDFDownloadLink>
             </div>
         </div>
