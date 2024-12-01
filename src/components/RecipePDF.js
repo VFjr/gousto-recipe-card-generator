@@ -50,11 +50,13 @@ const styles = StyleSheet.create({
     page: {
         padding: 15,
         fontFamily: 'Inter',
+        flexDirection: 'column',
     },
     contentContainer: {
         flexDirection: 'row',
         gap: 10,
         marginBottom: 10,
+        flexShrink: 0,
     },
     leftColumn: {
         width: '35%',
@@ -64,6 +66,17 @@ const styles = StyleSheet.create({
     },
     section: {
         marginBottom: 10,
+        flex: 1,
+        flexDirection: 'column',
+    },
+    instructionsContent: {
+        flex: 1,
+        flexDirection: 'row',
+        gap: 10,
+    },
+    instructionColumn: {
+        flex: 1,
+        flexDirection: 'column',
     },
 
     // Typography
@@ -139,7 +152,7 @@ const styles = StyleSheet.create({
     // Instructions
     instruction: {
         fontSize: 8,
-        marginBottom: 0,
+        marginBottom: 5,
     },
     instructionContent: {
         flexDirection: 'row',
@@ -176,6 +189,11 @@ function adjustSpaceInHtmlTags(html) {
 }
 
 function RecipePDF({ recipe, images }) {
+    // Split instructions into two arrays
+    const midPoint = Math.ceil(recipe.cooking_instructions.length / 2);
+    const leftColumnInstructions = recipe.cooking_instructions.slice(0, midPoint);
+    const rightColumnInstructions = recipe.cooking_instructions.slice(midPoint);
+
     return (
         <Document>
             <Page size="A4" style={styles.page}>
@@ -215,33 +233,67 @@ function RecipePDF({ recipe, images }) {
 
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Instructions</Text>
-                    {recipe.cooking_instructions.map((step) => {
-                        const instructionImageSrc = images.instructions[step.order] || images.main;
-                        return (
-                            <View key={step.order} style={styles.instruction}>
-                                <View style={styles.instructionContent}>
-                                    <View style={styles.instructionImageContainer}>
-                                        {instructionImageSrc ? (
-                                            <Image
-                                                style={styles.instructionImage}
-                                                src={instructionImageSrc}
-                                            />
-                                        ) : (
-                                            <Text>No Image Available</Text>
-                                        )}
+                    <View style={styles.instructionsContent}>
+                        <View style={styles.instructionColumn}>
+                            {leftColumnInstructions.map((step) => {
+                                const instructionImageSrc = images.instructions[step.order] || images.main;
+                                return (
+                                    <View key={step.order} style={styles.instruction}>
+                                        <View style={styles.instructionContent}>
+                                            <View style={styles.instructionImageContainer}>
+                                                {instructionImageSrc ? (
+                                                    <Image
+                                                        style={styles.instructionImage}
+                                                        src={instructionImageSrc}
+                                                    />
+                                                ) : (
+                                                    <Text>No Image Available</Text>
+                                                )}
+                                            </View>
+                                            <View style={styles.instructionTextContainer}>
+                                                <Html
+                                                    stylesheet={instructionHtmlStylesheet}
+                                                    style={{ fontSize: 8 }}
+                                                >
+                                                    {adjustSpaceInHtmlTags(step.instruction)}
+                                                </Html>
+                                            </View>
+                                        </View>
                                     </View>
-                                    <View style={styles.instructionTextContainer}>
-                                        <Html
-                                            stylesheet={instructionHtmlStylesheet}
-                                            style={{ fontSize: 8 }}
-                                        >
-                                            {adjustSpaceInHtmlTags(step.instruction)}
-                                        </Html>
+                                );
+                            })}
+                        </View>
+
+                        <View style={styles.instructionColumn}>
+                            {rightColumnInstructions.map((step) => {
+                                const instructionImageSrc = images.instructions[step.order] || images.main;
+                                return (
+                                    <View key={step.order} style={styles.instruction}>
+                                        <View style={styles.instructionContent}>
+                                            <View style={styles.instructionImageContainer}>
+                                                {instructionImageSrc ? (
+                                                    <Image
+                                                        style={styles.instructionImage}
+                                                        src={instructionImageSrc}
+                                                    />
+                                                ) : (
+                                                    <Text>No Image Available</Text>
+                                                )}
+                                            </View>
+                                            <View style={styles.instructionTextContainer}>
+                                                <Html
+                                                    stylesheet={instructionHtmlStylesheet}
+                                                    style={{ fontSize: 8 }}
+                                                >
+                                                    {adjustSpaceInHtmlTags(step.instruction)}
+                                                </Html>
+                                            </View>
+                                        </View>
                                     </View>
-                                </View>
-                            </View>
-                        );
-                    })}
+                                );
+                            })}
+                        </View>
+                    </View>
                 </View>
             </Page>
         </Document>
