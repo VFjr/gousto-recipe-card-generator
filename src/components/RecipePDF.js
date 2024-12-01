@@ -10,21 +10,10 @@ const parseInstructions = (htmlString) => {
 };
 
 const styles = StyleSheet.create({
+    // Layout
     page: {
         padding: 20,
         fontFamily: 'Helvetica',
-    },
-    title: {
-        fontSize: 18,
-        marginBottom: 5,
-        color: '#d32f2f',
-    },
-    meta: {
-        flexDirection: 'row',
-        gap: 10,
-        marginBottom: 10,
-        color: '#666',
-        fontSize: 8,
     },
     contentContainer: {
         flexDirection: 'row',
@@ -37,6 +26,30 @@ const styles = StyleSheet.create({
     rightColumn: {
         width: '55%',
     },
+    section: {
+        marginBottom: 10,
+    },
+
+    // Typography
+    title: {
+        fontSize: 18,
+        marginBottom: 5,
+        color: '#d32f2f',
+    },
+    sectionTitle: {
+        fontSize: 12,
+        marginBottom: 5,
+        color: '#d32f2f',
+    },
+    meta: {
+        flexDirection: 'row',
+        gap: 10,
+        marginBottom: 10,
+        color: '#666',
+        fontSize: 8,
+    },
+
+    // Images
     image: {
         width: '100%',
         height: 180,
@@ -44,14 +57,24 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         borderRadius: 5,
     },
-    section: {
-        marginBottom: 10,
+    ingredientImage: {
+        width: 15,
+        height: 15,
+        borderRadius: 8,
     },
-    sectionTitle: {
-        fontSize: 12,
-        marginBottom: 5,
-        color: '#d32f2f',
+    instructionImage: {
+        width: 80,
+        height: 64,
+        objectFit: 'cover',
+        borderRadius: 3,
     },
+    instructionImageContainer: {
+        width: 80,
+        minWidth: 80,
+        height: 64,
+    },
+
+    // Ingredients
     ingredientsGrid: {
         flexDirection: 'row',
         flexWrap: 'wrap',
@@ -67,15 +90,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 3,
     },
-    ingredientImage: {
-        width: 15,
-        height: 15,
-        borderRadius: 8,
-    },
     ingredient: {
         fontSize: 8,
         flex: 1,
     },
+
+    // Instructions
     instruction: {
         fontSize: 8,
         marginBottom: 10,
@@ -95,17 +115,6 @@ const styles = StyleSheet.create({
     },
     instructionText: {
         marginBottom: 3,
-    },
-    instructionImage: {
-        width: 80,
-        height: 64,
-        objectFit: 'cover',
-        borderRadius: 3,
-    },
-    instructionImageContainer: {
-        width: 80,
-        minWidth: 80,
-        height: 64,
     },
 });
 
