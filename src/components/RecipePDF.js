@@ -4,7 +4,10 @@ const parseInstructions = (htmlString) => {
     // Split by paragraph tags and clean up
     return htmlString
         .split('</p>')
-        .map(p => p.replace(/<p>/g, '').replace(/<\/?strong>/g, '').trim())
+        .map(p => p.replace(/<p>/g, '')
+            .replace(/<\/?strong>/g, '')
+            .replace(/<\/?span.*?>/g, '')
+            .trim())
         .filter(p => p.length > 0);
 };
 
@@ -97,11 +100,11 @@ const styles = StyleSheet.create({
     // Instructions
     instruction: {
         fontSize: 8,
-        marginBottom: 10,
+        marginBottom: 0,
     },
     instructionContent: {
         flexDirection: 'row',
-        gap: 10,
+        gap: 5,
         alignItems: 'flex-start',
     },
     instructionTextContainer: {
