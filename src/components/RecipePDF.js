@@ -1,4 +1,6 @@
 import { Document, Page, Text, View, StyleSheet, Image, Font } from '@react-pdf/renderer';
+import Html from 'react-pdf-html';
+
 
 // Register the Roboto font
 Font.register({
@@ -108,8 +110,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     ingredientImage: {
-        width: 15,
-        height: 15,
+        width: 20,
+        height: 20,
         borderRadius: 8,
     },
     instructionImage: {
@@ -220,11 +222,8 @@ function RecipePDF({ recipe, images }) {
                                         )}
                                     </View>
                                     <View style={styles.instructionTextContainer}>
-                                        {parseInstructions(step.instruction).map((line, index) => (
-                                            <Text key={index} style={styles.instructionText}>
-                                                {line}
-                                            </Text>
-                                        ))}
+                                        {console.log(step.instruction)}
+                                        <Html style={{ fontSize: 8 }}>{step.instruction}</Html>
                                     </View>
                                 </View>
                             </View>
