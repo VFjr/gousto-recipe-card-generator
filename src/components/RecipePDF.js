@@ -171,10 +171,10 @@ const instructionHtmlStylesheet = {
     p: {
         margin: 0,
     },
-    ['.text-purple']: {
+    '.text-purple': {
         color: 'purple',
     },
-    ['.text-danger']: {
+    '.text-danger': {
         color: 'red',
     },
 };
