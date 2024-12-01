@@ -88,7 +88,9 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         color: '#d32f2f',
         fontWeight: 'bold',
-
+        borderBottomWidth: 2,
+        borderBottomColor: '#d32f2f',
+        borderBottomStyle: 'solid',
     },
     meta: {
         flexDirection: 'row',
