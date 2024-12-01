@@ -163,37 +163,32 @@ function RecipePDF({ recipe, images }) {
 
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Instructions</Text>
-                    {recipe.cooking_instructions.map((step) => (
-                        <View key={step.order} style={styles.instruction}>
-                            <View style={styles.instructionContent}>
-                                {images.instructions[step.order] ? (
-                                    <>
-                                        <View style={styles.instructionImageContainer}>
+                    {recipe.cooking_instructions.map((step) => {
+                        const instructionImageSrc = images.instructions[step.order] || images.main;
+                        return (
+                            <View key={step.order} style={styles.instruction}>
+                                <View style={styles.instructionContent}>
+                                    <View style={styles.instructionImageContainer}>
+                                        {instructionImageSrc ? (
                                             <Image
                                                 style={styles.instructionImage}
-                                                src={images.instructions[step.order]}
+                                                src={instructionImageSrc}
                                             />
-                                        </View>
-                                        <View style={styles.instructionTextContainerWithImage}>
-                                            {parseInstructions(step.instruction).map((line, index) => (
-                                                <Text key={index} style={styles.instructionText}>
-                                                    {line}
-                                                </Text>
-                                            ))}
-                                        </View>
-                                    </>
-                                ) : (
-                                    <View style={styles.instructionTextContainer}>
+                                        ) : (
+                                            <Text>No Image Available</Text>
+                                        )}
+                                    </View>
+                                    <View style={styles.instructionTextContainerWithImage}>
                                         {parseInstructions(step.instruction).map((line, index) => (
                                             <Text key={index} style={styles.instructionText}>
                                                 {line}
                                             </Text>
                                         ))}
                                     </View>
-                                )}
+                                </View>
                             </View>
-                        </View>
-                    ))}
+                        );
+                    })}
                 </View>
             </Page>
         </Document>
