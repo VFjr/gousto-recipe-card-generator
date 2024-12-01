@@ -45,17 +45,6 @@ Font.register({
     ],
 });
 
-const parseInstructions = (htmlString) => {
-    // Split by paragraph tags and clean up
-    return htmlString
-        .split('</p>')
-        .map(p => p.replace(/<p>/g, '')
-            .replace(/<\/?strong>/g, '')
-            .replace(/<\/?span.*?>/g, '')
-            .trim())
-        .filter(p => p.length > 0);
-};
-
 const styles = StyleSheet.create({
     // Layout
     page: {
@@ -179,6 +168,13 @@ const instructionHtmlStylesheet = {
     },
 };
 
+
+function adjustSpaceInHtmlTags(html) {
+    // https://github.com/danomatic/react-pdf-html/issues/100
+    // Use a regular expression to find <strong> or <span> tags with a leading space after them and move the space before the tag
+    return html.replace(/(<(strong|span)>)\s+/g, ' $1');
+}
+
 function RecipePDF({ recipe, images }) {
     return (
         <Document>
@@ -235,8 +231,12 @@ function RecipePDF({ recipe, images }) {
                                         )}
                                     </View>
                                     <View style={styles.instructionTextContainer}>
-                                        {console.log(step.instruction)}
-                                        <Html stylesheet={instructionHtmlStylesheet} style={{ fontSize: 8 }}>{step.instruction}</Html>
+                                        <Html
+                                            stylesheet={instructionHtmlStylesheet}
+                                            style={{ fontSize: 8 }}
+                                        >
+                                            {adjustSpaceInHtmlTags(step.instruction)}
+                                        </Html>
                                     </View>
                                 </View>
                             </View>
