@@ -12,7 +12,7 @@ const parseInstructions = (htmlString) => {
 const styles = StyleSheet.create({
     // Layout
     page: {
-        padding: 20,
+        padding: 15,
         fontFamily: 'Helvetica',
     },
     contentContainer: {
@@ -119,20 +119,22 @@ const styles = StyleSheet.create({
 });
 
 function RecipePDF({ recipe }) {
-    const [imageData, setImageData] = useState(null);
-    const [ingredientImages, setIngredientImages] = useState({});
-    const [instructionImages, setInstructionImages] = useState({});
+    const [images, setImages] = useState({
+        main: null,
+        ingredients: {},
+        instructions: {}
+    });
 
     useEffect(() => {
         const fetchImages = async () => {
             try {
-                // Fetch main recipe image
                 const corsProxy = 'https://corsproxy.io/?';
+
+                // Fetch main recipe image
                 const imageUrl = recipe.media.images[2].image;
                 const response = await fetch(corsProxy + encodeURIComponent(imageUrl));
                 const blob = await response.blob();
                 const mainImageData = await blobToBase64(blob);
-                setImageData(mainImageData);
 
                 // Fetch ingredient images
                 const ingredientPromises = recipe.ingredients.map(async (ingredient) => {
@@ -162,8 +164,12 @@ function RecipePDF({ recipe }) {
                 const ingredientImagesMap = Object.fromEntries(ingredientResults.filter(Boolean));
                 const instructionImagesMap = Object.fromEntries(instructionResults.filter(Boolean));
 
-                setIngredientImages(ingredientImagesMap);
-                setInstructionImages(instructionImagesMap);
+                // Update all images at once
+                setImages({
+                    main: mainImageData,
+                    ingredients: ingredientImagesMap,
+                    instructions: instructionImagesMap
+                });
             } catch (error) {
                 console.error('Error loading images:', error);
             }
@@ -192,10 +198,10 @@ function RecipePDF({ recipe }) {
 
                 <View style={styles.contentContainer}>
                     <View style={styles.leftColumn}>
-                        {imageData && (
+                        {images.main && (
                             <Image
                                 style={styles.image}
-                                src={imageData}
+                                src={images.main}
                             />
                         )}
                     </View>
@@ -206,10 +212,10 @@ function RecipePDF({ recipe }) {
                             <View style={styles.ingredientsGrid}>
                                 {recipe.ingredients.map((ingredient) => (
                                     <View key={ingredient.uid} style={styles.ingredientCard}>
-                                        {ingredientImages[ingredient.uid] && (
+                                        {images.ingredients[ingredient.uid] && (
                                             <Image
                                                 style={styles.ingredientImage}
-                                                src={ingredientImages[ingredient.uid]}
+                                                src={images.ingredients[ingredient.uid]}
                                             />
                                         )}
                                         <Text style={styles.ingredient}>{ingredient.label}</Text>
@@ -225,12 +231,12 @@ function RecipePDF({ recipe }) {
                     {recipe.cooking_instructions.map((step) => (
                         <View key={step.order} style={styles.instruction}>
                             <View style={styles.instructionContent}>
-                                {instructionImages[step.order] ? (
+                                {images.instructions[step.order] ? (
                                     <>
                                         <View style={styles.instructionImageContainer}>
                                             <Image
                                                 style={styles.instructionImage}
-                                                src={instructionImages[step.order]}
+                                                src={images.instructions[step.order]}
                                             />
                                         </View>
                                         <View style={styles.instructionTextContainerWithImage}>
