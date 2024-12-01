@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
         padding: 15,
         fontFamily: 'Inter',
         flexDirection: 'column',
+        flex: 1,
     },
     contentContainer: {
         flexDirection: 'row',
@@ -65,7 +66,6 @@ const styles = StyleSheet.create({
         width: '55%',
     },
     section: {
-        marginBottom: 10,
         flex: 1,
         flexDirection: 'column',
     },
@@ -151,10 +151,12 @@ const styles = StyleSheet.create({
 
     // Instructions
     instruction: {
+        flex: 1,
         fontSize: 8,
         marginBottom: 5,
     },
     instructionContent: {
+        flex: 1,
         flexDirection: 'row',
         gap: 5,
         alignItems: 'flex-start',
@@ -162,6 +164,8 @@ const styles = StyleSheet.create({
     instructionTextContainer: {
         flex: 1,
         paddingLeft: 0,
+        flexDirection: 'column',
+        justifyContent: 'center',
     },
     instructionText: {
         marginBottom: 3,
