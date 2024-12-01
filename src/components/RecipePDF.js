@@ -110,27 +110,24 @@ const styles = StyleSheet.create({
 });
 
 function RecipePDF({ recipe }) {
-    const [images, setImages] = useState({
-        main: null,
-        instructions: {}
-    });
+    const [imageData, setImageData] = useState(null);
+    const [instructionImages, setInstructionImages] = useState({});
 
     useEffect(() => {
         const fetchImages = async () => {
             try {
-                const corsProxy = 'https://corsproxy.io/?';
-
                 // Fetch main recipe image
+                const corsProxy = 'https://corsproxy.io/?';
                 const imageUrl = recipe.media.images[2].image;
                 const response = await fetch(corsProxy + encodeURIComponent(imageUrl));
                 const blob = await response.blob();
                 const mainImageData = await blobToBase64(blob);
+                setImageData(mainImageData);
 
                 // Fetch instruction images
                 const instructionPromises = recipe.cooking_instructions.map(async (instruction) => {
                     if (instruction.media?.images?.[0]?.image) {
-                        const imageUrl = instruction.media.images[0].image;
-                        const response = await fetch(corsProxy + encodeURIComponent(imageUrl));
+                        const response = await fetch(corsProxy + encodeURIComponent(instruction.media.images[0].image));
                         const blob = await response.blob();
                         const base64 = await blobToBase64(blob);
                         return [instruction.order, base64];
@@ -140,12 +137,7 @@ function RecipePDF({ recipe }) {
 
                 const instructionResults = await Promise.all(instructionPromises);
                 const instructionImagesMap = Object.fromEntries(instructionResults.filter(Boolean));
-
-                // Set both main image and instruction images in a single update
-                setImages({
-                    main: mainImageData,
-                    instructions: instructionImagesMap
-                });
+                setInstructionImages(instructionImagesMap);
             } catch (error) {
                 console.error('Error loading images:', error);
             }
@@ -174,10 +166,10 @@ function RecipePDF({ recipe }) {
 
                 <View style={styles.contentContainer}>
                     <View style={styles.leftColumn}>
-                        {images.main && (
+                        {imageData && (
                             <Image
                                 style={styles.image}
-                                src={images.main}
+                                src={imageData}
                             />
                         )}
                     </View>
@@ -201,12 +193,12 @@ function RecipePDF({ recipe }) {
                     {recipe.cooking_instructions.map((step) => (
                         <View key={step.order} style={styles.instruction}>
                             <View style={styles.instructionContent}>
-                                {images.instructions[step.order] ? (
+                                {instructionImages[step.order] ? (
                                     <>
                                         <View style={styles.instructionImageContainer}>
                                             <Image
                                                 style={styles.instructionImage}
-                                                src={images.instructions[step.order]}
+                                                src={instructionImages[step.order]}
                                             />
                                         </View>
                                         <View style={styles.instructionTextContainerWithImage}>
