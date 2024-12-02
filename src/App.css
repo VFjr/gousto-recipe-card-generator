@@ -16,13 +16,6 @@
   margin-bottom: 2rem;
 }
 
-.url-input {
-  padding: 1rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
 .submit-button {
   width: 100%;
   padding: 0 2rem;
@@ -90,7 +83,8 @@
   margin-bottom: 1rem;
 }
 
-.search-input {
+.search-input,
+.url-input {
   width: 100%;
   padding: 1rem;
   border: 2px solid #e0e0e0;
@@ -98,11 +92,11 @@
   font-size: 1rem;
   transition: border-color 0.3s;
   box-sizing: border-box;
-
 }
 
-.search-input:focus {
-  border-color: #1a73e8;
+.search-input:focus,
+.url-input:focus {
+  border-color: #d32f2f;
   outline: none;
 }
 
