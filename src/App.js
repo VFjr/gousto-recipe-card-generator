@@ -67,6 +67,14 @@ function App() {
     }
   };
 
+  const handleRandomRecipe = () => {
+    if (fuse) {
+      const allRecipes = fuse._docs; // Access the original list of recipes
+      const randomRecipe = allRecipes[Math.floor(Math.random() * allRecipes.length)];
+      setUrl("https://www.gousto.co.uk/cookbook/" + randomRecipe.url);
+    }
+  };
+
   return (
     <div className="App">
       <div className="container">
@@ -76,6 +84,12 @@ function App() {
         </div>
 
         <div className="search-container">
+          <button onClick={handleRandomRecipe} className="random-button">
+            Surprise Me!
+          </button>
+
+          <div className="url-separator">OR</div>
+
           <div className="search-box">
             <input
               type="text"
