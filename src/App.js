@@ -132,6 +132,9 @@ function App() {
         {error && <div className="error">{error}</div>}
         {recipe && <RecipeDisplay recipe={recipe} />}
       </div>
+      <footer className="footer">
+        <p>Built with ❤️ by <a href="https://github.com/VFJr" target="_blank" rel="noopener noreferrer">@VFJr</a></p>
+      </footer>
     </div>
   );
 }
