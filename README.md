@@ -5,8 +5,9 @@ This project is a simple static React application that allows users to generate 
 ## Features
 
 - Fetch recipe details including images, ingredients and cooking instructions from a Gousto recipe URL
-- Prepare a single pagerecipe card PDF with the recipe details, optimised for printing
+- Prepare a single page recipe card PDF with the recipe details, optimised for printing
 - Responsive design for a better user experience on different devices
+- Suprise me button to generate the recipe card for a random recipe
 
 ## Getting Started
 ### Prerequisites
@@ -37,13 +38,4 @@ To start the development server, run:
 ### Deployment
 
 This application is hosted on GitHub Pages and can be accessed at: [Gousto Recipe Card Generator](https://vfjr.github.io/gousto-recipe-card-generator/)
-
-### Example Usage
-
-To try out the application, you can use this example Gousto recipe URL, which is one of my favourites:
-```
-https://www.gousto.co.uk/cookbook/recipes/zigni-berbere-beef-stew-with-rice
-```
-
-If you find this tool useful and use it for your own recipe collection, I'd love to hear about it! Feel free to open an issue or discussion on GitHub to share your experience.
 
