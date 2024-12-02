@@ -6,7 +6,6 @@ import RecipeDisplay from './components/RecipeDisplay';
 function App() {
   const [url, setUrl] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [recipes, setRecipes] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [fuse, setFuse] = useState(null);
   const [recipe, setRecipe] = useState(null);
@@ -19,7 +18,6 @@ function App() {
     fetch(`${basePath}/data/recipe_urls.json`)
       .then(response => response.json())
       .then(data => {
-        setRecipes(data);
         setFuse(new Fuse(data, {
           keys: ['name'],
           threshold: 0.3,
