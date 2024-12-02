@@ -1,15 +1,15 @@
 # Gousto Recipe Card Generator
 
-This project is a simple React application that allows users to generate and display recipe cards from Gousto recipes. Users can input a Gousto recipe URL, and the application will fetch and display the recipe details, including ingredients and cooking instructions.
+This project is a simple static React application that allows users to generate PDF recipe cards from Gousto recipes, directly in the browser. Users can input a Gousto recipe URL, and the application will fetch the recipe details, including ingredients and cooking instructions, and generate a PDF with the recipe card. Note that the layout of this recipe card is A4 and is optimised for printing.
 
 ## Features
 
-- Fetch and display recipe details from a Gousto recipe URL
-- Display recipe title, preparation time, rating, description, ingredients, and cooking instructions
+- Fetch recipe details including images, ingredients and cooking instructions from a Gousto recipe URL
+- Prepare a single page recipe card PDF with the recipe details, optimised for printing
 - Responsive design for a better user experience on different devices
+- Suprise me button to generate the recipe card for a random recipe
 
 ## Getting Started
-
 ### Prerequisites
 
 - Node.js (v14 or higher)

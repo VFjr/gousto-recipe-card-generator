@@ -1,26 +1,27 @@
 .App {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   background-color: #f5f5f5;
-  padding: 2rem;
+  padding: 2rem 0 0 0;
+  box-sizing: border-box;
+  align-items: center;
 }
 
 .container {
+  flex: 1;
+  width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 2rem auto;
+  padding: 0 2rem;
+  box-sizing: border-box;
 }
 
 .url-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.url-input {
-  padding: 1rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
+  margin-top: 0;
 }
 
 .submit-button {
@@ -46,7 +47,7 @@
   padding: 1rem;
   background-color: #ffebee;
   border-radius: 8px;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
 .header {
@@ -78,4 +79,100 @@
   .submit-button {
     width: auto;
   }
+}
+
+.search-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.search-box {
+  position: relative;
+  margin-bottom: 0;
+}
+
+.search-input,
+.url-input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.search-input:focus,
+.url-input:focus {
+  border-color: #d32f2f;
+  outline: none;
+}
+
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.search-result-item {
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-result-item:hover {
+  background-color: #f8f9fa;
+}
+
+.url-separator {
+  text-align: center;
+  margin: 1rem 0;
+  font-weight: bold;
+  color: #666;
+}
+
+.random-button {
+  width: 100%;
+  padding: 0 2rem;
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  min-height: 54px;
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+.random-button:hover {
+  background-color: #b71c1c;
+}
+
+.footer {
+  text-align: center;
+  background-color: #f5f5f5;
+  color: #666;
+  font-size: 0.875rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.footer a {
+  color: #666;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer a:hover {
+  color: #d32f2f;
 }

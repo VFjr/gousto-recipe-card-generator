@@ -11,6 +11,13 @@ function RecipeDisplay({ recipe }) {
     });
 
     useEffect(() => {
+        // Reset images when recipe changes
+        setImages({
+            main: null,
+            ingredients: {},
+            instructions: {}
+        });
+
         const fetchImages = async () => {
             try {
                 console.log("fetchimages");
@@ -75,16 +82,22 @@ function RecipeDisplay({ recipe }) {
 
     return (
         <div className="recipe">
-            {/* Existing recipe display code */}
+            <p className="recipe-title">Current Recipe: <strong>{recipe.title}</strong></p>
             <div className="recipe-actions">
                 <PDFDownloadLink
+                    key={recipe.title}
                     document={<RecipePDF recipe={recipe} images={images} />}
                     fileName={`${recipe.title}.pdf`}
                     className="download-button"
                 >
-                    {({ loading }) =>
-                        !loading && images.main ? 'Download PDF' : "Loading images..."
-                    }
+                    {({ loading }) => (
+                        <button
+                            className="download-button"
+                            disabled={loading || !images.main}
+                        >
+                            {!loading && images.main ? 'Download PDF' : "Loading images..."}
+                        </button>
+                    )}
                 </PDFDownloadLink>
             </div>
         </div>
