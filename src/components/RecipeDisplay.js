@@ -82,6 +82,7 @@ function RecipeDisplay({ recipe }) {
 
     return (
         <div className="recipe">
+            <p className="recipe-title">Current Recipe: <strong>{recipe.title}</strong></p>
             <div className="recipe-actions">
                 <PDFDownloadLink
                     key={recipe.title}
