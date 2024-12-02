@@ -257,7 +257,7 @@ function RecipePDF({ recipe, images }) {
                                             <View style={styles.instructionTextContainer}>
                                                 <Html
                                                     stylesheet={instructionHtmlStylesheet}
-                                                    style={{ fontSize: 9 }}
+                                                    style={{ fontSize: 8 }}
                                                 >
                                                     {adjustSpaceInHtmlTags(step.instruction)}
                                                 </Html>
@@ -287,7 +287,7 @@ function RecipePDF({ recipe, images }) {
                                             <View style={styles.instructionTextContainer}>
                                                 <Html
                                                     stylesheet={instructionHtmlStylesheet}
-                                                    style={{ fontSize: 9 }}
+                                                    style={{ fontSize: 8 }}
                                                 >
                                                     {adjustSpaceInHtmlTags(step.instruction)}
                                                 </Html>
