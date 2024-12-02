@@ -56,14 +56,14 @@ const styles = StyleSheet.create({
     contentContainer: {
         flexDirection: 'row',
         gap: 10,
-        marginBottom: 10,
+        marginBottom: 5,
         flexShrink: 0,
     },
     leftColumn: {
         width: '35%',
     },
     rightColumn: {
-        width: '55%',
+        width: '65%',
     },
     section: {
         flex: 1,
