@@ -80,7 +80,7 @@ function App() {
       <div className="container">
         <div className="header">
           <h1>Gousto Recipe Card Generator</h1>
-          <p>Enter a Gousto recipe URL or search by recipe name.</p>
+          <p>Enter a Gousto recipe URL, search by recipe name, or press the "Surprise Me!" button for a random recipe.</p>
         </div>
 
         <div className="search-container">
