@@ -36,7 +36,7 @@ function App() {
   }, [searchTerm, fuse]);
 
   const handleRecipeSelect = (selectedUrl) => {
-    setUrl("https://www.gousto.co.uk/cookbook/" + selectedUrl);
+    setUrl("https://www.gousto.co.uk/cookbook" + selectedUrl);
     setSearchTerm('');
     setSearchResults([]);
   };
@@ -71,7 +71,7 @@ function App() {
     if (fuse) {
       const allRecipes = fuse._docs; // Access the original list of recipes
       const randomRecipe = allRecipes[Math.floor(Math.random() * allRecipes.length)];
-      setUrl("https://www.gousto.co.uk/cookbook/" + randomRecipe.url);
+      setUrl("https://www.gousto.co.uk/cookbook" + randomRecipe.url);
     }
   };
 
