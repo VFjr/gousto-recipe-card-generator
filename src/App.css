@@ -47,7 +47,7 @@
   padding: 1rem;
   background-color: #ffebee;
   border-radius: 8px;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
 .header {
@@ -84,7 +84,6 @@
 .search-container {
   width: 100%;
   margin: 0 auto;
-  margin-bottom: 2rem;
 }
 
 .search-box {
