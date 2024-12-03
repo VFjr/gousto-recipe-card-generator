@@ -39,3 +39,13 @@ To start the development server, run:
 
 This application is hosted on GitHub Pages and can be accessed at: [Gousto Recipe Card Generator](https://vfjr.github.io/gousto-recipe-card-generator/)
 
+
+
+
+
+This is a temporary branch that uses a local cors proxy to fetch the recipe images.
+
+run 
+```sh
+lcp --proxyUrl https://production-api.gousto.co.uk
+```

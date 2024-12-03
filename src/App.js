@@ -3,6 +3,8 @@ import Fuse from 'fuse.js';
 import './App.css';
 import RecipeDisplay from './components/RecipeDisplay';
 
+const USE_CORS_PROXY = false; // Toggle this to true/false as needed
+
 function App() {
   const [url, setUrl] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -47,15 +49,15 @@ function App() {
     setError(null);
 
     try {
-      // Extract the recipe slug from the URL
       const slug = url.substring(url.lastIndexOf('/') + 1);
       if (!slug) throw new Error('Invalid URL format');
 
-      // Use a CORS proxy service
-      const corsProxy = 'https://corsproxy.io/';
-      const apiUrl = `https://production-api.gousto.co.uk/cmsreadbroker/v1/recipe/${slug}`;
-      const response = await fetch(corsProxy + '?' + encodeURIComponent(apiUrl));
+      const apiUrl = `http://localhost:8010/proxy/cmsreadbroker/v1/recipe/${slug}`;
+      const finalUrl = USE_CORS_PROXY ?
+        'https://corsproxy.io/?' + encodeURIComponent(apiUrl) :
+        apiUrl;
 
+      const response = await fetch(finalUrl);
       const data = await response.json();
       if (data.status !== 'ok') throw new Error('Recipe not found');
 
@@ -130,7 +132,7 @@ function App() {
         </div>
 
         {error && <div className="error">{error}</div>}
-        {recipe && <RecipeDisplay recipe={recipe} />}
+        {recipe && <RecipeDisplay recipe={recipe} useCorsProxy={USE_CORS_PROXY} />}
       </div>
       <footer className="footer">
         <p>Built with ❤️ by <a href="https://github.com/VFJr" target="_blank" rel="noopener noreferrer">@VFJr</a></p>
