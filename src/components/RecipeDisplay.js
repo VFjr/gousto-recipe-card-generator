@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import RecipePDF from './RecipePDF';
 import './RecipeDisplay.css';
+import { CORS_PROXY_URL } from '../config';
 
 function RecipeDisplay({ recipe }) {
     const [images, setImages] = useState({
@@ -21,7 +22,6 @@ function RecipeDisplay({ recipe }) {
         const fetchImages = async () => {
             try {
                 console.log("fetchimages");
-                const corsProxy = 'https://corsproxy.io/?';
                 const blobToBase64 = (blob) => {
                     return new Promise((resolve) => {
                         const reader = new FileReader();
@@ -32,14 +32,14 @@ function RecipeDisplay({ recipe }) {
 
                 // Fetch main recipe image
                 const imageUrl = recipe.media.images[2].image;
-                const response = await fetch(corsProxy + encodeURIComponent(imageUrl));
+                const response = await fetch(CORS_PROXY_URL + imageUrl);
                 const blob = await response.blob();
                 const mainImageData = await blobToBase64(blob);
 
                 // Fetch ingredient images
                 const ingredientPromises = recipe.ingredients.map(async (ingredient) => {
                     if (ingredient.media?.images?.[0]?.image) {
-                        const response = await fetch(corsProxy + encodeURIComponent(ingredient.media.images[0].image));
+                        const response = await fetch(CORS_PROXY_URL + ingredient.media.images[0].image);
                         const blob = await response.blob();
                         const base64 = await blobToBase64(blob);
                         return [ingredient.uid, base64];
@@ -50,7 +50,7 @@ function RecipeDisplay({ recipe }) {
                 // Fetch instruction images
                 const instructionPromises = recipe.cooking_instructions.map(async (instruction) => {
                     if (instruction.media?.images?.[0]?.image) {
-                        const response = await fetch(corsProxy + encodeURIComponent(instruction.media.images[0].image));
+                        const response = await fetch(CORS_PROXY_URL + instruction.media.images[0].image);
                         const blob = await response.blob();
                         const base64 = await blobToBase64(blob);
                         return [instruction.order, base64];

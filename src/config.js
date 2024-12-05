@@ -1,0 +1,1 @@
+export const CORS_PROXY_URL = process.env.REACT_APP_CORS_URL || 'http://localhost:8080/'; 

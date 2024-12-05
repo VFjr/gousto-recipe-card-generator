@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Fuse from 'fuse.js';
 import './App.css';
 import RecipeDisplay from './components/RecipeDisplay';
+import { CORS_PROXY_URL } from './config';
 
 function App() {
   const [url, setUrl] = useState('');
@@ -52,9 +53,8 @@ function App() {
       if (!slug) throw new Error('Invalid URL format');
 
       // Use a CORS proxy service
-      const corsProxy = 'https://corsproxy.io/';
       const apiUrl = `https://production-api.gousto.co.uk/cmsreadbroker/v1/recipe/${slug}`;
-      const response = await fetch(corsProxy + '?' + encodeURIComponent(apiUrl));
+      const response = await fetch(CORS_PROXY_URL + apiUrl);
 
       const data = await response.json();
       if (data.status !== 'ok') throw new Error('Recipe not found');
