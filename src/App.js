@@ -53,8 +53,9 @@ function App() {
       if (!slug) throw new Error('Invalid URL format');
 
       // Use a CORS proxy service
-      const apiUrl = `https://production-api.gousto.co.uk/cmsreadbroker/v1/recipe/${slug}`;
-      const response = await fetch(CORS_PROXY_URL + apiUrl);
+      const apiUrl = `https://production-api.gousto.co.uk:443/cmsreadbroker/v1/recipe/${slug}`;
+      const strippedApiUrl = apiUrl.replace(/^https:\/\//, '');
+      const response = await fetch(CORS_PROXY_URL + strippedApiUrl);
 
       const data = await response.json();
       if (data.status !== 'ok') throw new Error('Recipe not found');

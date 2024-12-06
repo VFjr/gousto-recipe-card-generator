@@ -32,14 +32,16 @@ function RecipeDisplay({ recipe }) {
 
                 // Fetch main recipe image
                 const imageUrl = recipe.media.images[2].image;
-                const response = await fetch(CORS_PROXY_URL + imageUrl);
+                const strippedImageUrl = imageUrl.replace(/^https:\/\//, '').replace(/(\.[a-z]+)(\/|$)/, '$1:443$2');
+                const response = await fetch(CORS_PROXY_URL + strippedImageUrl);
                 const blob = await response.blob();
                 const mainImageData = await blobToBase64(blob);
 
                 // Fetch ingredient images
                 const ingredientPromises = recipe.ingredients.map(async (ingredient) => {
                     if (ingredient.media?.images?.[0]?.image) {
-                        const response = await fetch(CORS_PROXY_URL + ingredient.media.images[0].image);
+                        const strippedImageUrl = ingredient.media.images[0].image.replace(/^https:\/\//, '').replace(/(\.[a-z]+)(\/|$)/, '$1:443$2');
+                        const response = await fetch(CORS_PROXY_URL + strippedImageUrl);
                         const blob = await response.blob();
                         const base64 = await blobToBase64(blob);
                         return [ingredient.uid, base64];
@@ -50,7 +52,8 @@ function RecipeDisplay({ recipe }) {
                 // Fetch instruction images
                 const instructionPromises = recipe.cooking_instructions.map(async (instruction) => {
                     if (instruction.media?.images?.[0]?.image) {
-                        const response = await fetch(CORS_PROXY_URL + instruction.media.images[0].image);
+                        const strippedImageUrl = instruction.media.images[0].image.replace(/^https:\/\//, '').replace(/(\.[a-z]+)(\/|$)/, '$1:443$2');
+                        const response = await fetch(CORS_PROXY_URL + strippedImageUrl);
                         const blob = await response.blob();
                         const base64 = await blobToBase64(blob);
                         return [instruction.order, base64];
