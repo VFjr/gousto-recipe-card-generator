@@ -1,5 +1,9 @@
 # Gousto Recipe Card Generator
 
+> ⚠️ **Note:** This project is no longer maintained. For an improved full-stack version with more features, please visit:
+> - Repository: [github.com/VFjr/gousto-meal-planner](https://github.com/VFjr/gousto-meal-planner)
+> - Live Demo: [gousto.vfjr.dev](https://gousto.vfjr.dev/)
+
 This project is a simple static React application that allows users to generate PDF recipe cards from Gousto recipes, directly in the browser. Users can input a Gousto recipe URL, and the application will fetch the recipe details, including ingredients and cooking instructions, and generate a PDF with the recipe card. Note that the layout of this recipe card is A4 and is optimised for printing.
 
 ## Features
